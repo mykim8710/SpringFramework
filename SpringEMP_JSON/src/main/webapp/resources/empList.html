@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script> 
+				<script>
+				$(document).ready(function() {
+				 	$.ajax({
+						url : "http://localhost:8282/emp/empList",
+						type : "POST",
+						cache : false,
+						dataType : "json",
+						success : function(data) { 
+							console.log(data);
+							
+							$.each(data, function(key, value) {
+								console.log('key:'+ key + ', empNo :' + value.empNo + ', eName :' + value.eName +", job : " +value.job
+								+", mgr : " +value.mgr+", hireDate : " + value.hireDate +", sal : " + value.sal +", comm : " +value.comm
+								+", deptNo : " + value.deptNo );
+								
+								var tag = "";
+									tag += "<tr>";
+									tag += "<td>" +value.empNo +"</td>";
+									tag += "<td>" +value.eName +"</td>";
+									tag += "<td>" +value.job +"</td>";
+									tag += "<td>" +value.mgr +"</td>";
+									tag += "<td>" +value.hireDate +"</td>";
+									tag += "<td>" +value.sal +"</td>";
+									tag += "<td>" +value.comm +"</td>";
+									tag += "<td>" +value.deptNo +"</td>";
+									tag += "</tr>"
+									
+								$("#add").append(tag);
+							});
+						},
+						error : function(request, status, error) {
+							console.log(request.responseText);
+							console.log(error);
+						}
+					})
+				});
+		</script>
+	</head>
+
+	<body>
+		<table id="add" border="1">
+			<tr>
+				<td>EMPNO</td>
+				<td>ENAME</td>
+				<td>JOB</td>
+				<td>MGR</td>
+				<td>HIREDATE</td>
+				<td>SAL</td>
+				<td>COMM</td>
+				<td>DEPTNO</td>
+			</tr>
+		</table>
+	</body>
+</html>

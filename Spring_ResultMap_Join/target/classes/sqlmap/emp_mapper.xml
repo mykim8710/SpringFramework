@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="edu.bit.ex.mapper.EmpMapper">
+	<!-- 1-N 해결 -->
+	<!-- https://noritersand.github.io/mybatis/2013/11/28/mybatis-1-n-%EA%B4%80%EA%B3%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B2%98%EB%A6%AC-data-concatenation/ -->
+	<!-- <resultMap id="DeptEmpResultMap" type="java.util.HashMap"> <id property="deptno" 
+		column="deptno"/> <result property="ename" column="ename"/> <result property="empno" 
+		column="empno"/> </resultMap> <resultMap id="DeptEmpMap" type="java.util.HashMap" 
+		> <id property="deptno" column="deptno" /> <result property="dname" column="dname"/> 
+		<result property="loc" column="loc" /> <collection property="empList" javaType="java.util.ArrayList" 
+		resultMap="DeptEmpResultMap" /> </resultMap> -->
+
+	<resultMap id="emp" type="EmpVO">
+		<id property="empNo" column="empno" />
+		<result property="eName" column="ename" />
+		<result property="job" column="job" />
+		<result property="mgr" column="mgr" />
+		<result property="hireDate" column="hireDate" />
+		<result property="sal" column="sal" />
+		<result property="comm" column="comm" />
+		<result property="deptNo" column="deptno" />
+	</resultMap>
+
+	<resultMap id="DeptEmpResult" type="DeptEmpVO">
+		<id property="deptNo" column="deptno" />
+		<result property="dName" column="dname" />
+		<result property="loc" column="loc" />
+		<collection property="empList" javaType="java.util.ArrayList" resultMap="emp" />
+	</resultMap>
+
+	<select id="selectResult" parameterType="int" resultMap="DeptEmpResult">
+	<![CDATA[
+		SELECT * FROM EMP e , DEPT d 
+		WHERE e.deptno = d.deptno 
+		AND d.deptno = #{deptno}	
+  	]]>
+	</select>
+
+	<select id="selectAll" resultType="EmpVO">
+	<![CDATA[
+		SELECT * FROM EMP
+  	]]>
+	</select>
+
+	<!-- <select id="selectAllEmpListHashMap" resultType="hashmap" > <![CDATA[ 
+		select * from emp ]]> </select> -->
+
+</mapper>

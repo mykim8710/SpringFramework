@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+	<bean id="student" class="edu.bit.ex.Student">
+		<property name="name" value="홍길동" />
+		<property name="age" value="10" />
+		<property name="gradeNum" value="3" />
+		<property name="classNum" value="5" />
+	</bean>
+
+	<bean id="worker" class="edu.bit.ex.Worker">
+		<property name="name" value="홍길순" />
+		<property name="age" value="35" />
+		<property name="job" value="개발자" />
+	</bean>
+
+	<!-- <bean id="logAspect" class="edu.bit.ex.LogAspect" />
+
+	<aop:config>
+		<aop:aspect ref="logAspect">
+			<aop:pointcut id="publicM" expression="within(edu.bit.ex.*)" />
+			<aop:before pointcut-ref="publicM" method="printLogging" />
+		</aop:aspect>
+	</aop:config> -->
+
+
+	<bean id="logAspect2" class="edu.bit.ex.LogAspect"/> 
+	
+	<aop:config> 
+		<aop:aspect ref="logAspect2"> 
+			<aop:pointcut id="publicM2" expression="within(edu.bit.ex.*)"/> 
+			<aop:around pointcut-ref="publicM2" method="loggerAOP"/>
+		</aop:aspect>
+	</aop:config>
+
+</beans>
